@@ -1,0 +1,11 @@
+name: env-dev
+
+channels:
+  - cpg
+  - bioconda
+  - conda-forge
+
+dependencies:
+  - pre-commit
+  - pylint
+  - hail=0.2.61.devd9fcfb5
