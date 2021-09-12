@@ -45,7 +45,11 @@ def main():  # pylint: disable=missing-function-docstring
     dataproc.hail_dataproc_job(
         b,
         f'{scripts_dir}/myscript.py',
-        pyfiles=[f'{package_dir}/{fp}' for fp in os.listdir(package_dir)],
+        pyfiles=[
+            f'{package_dir}/{fp}'
+            for fp in os.listdir(package_dir)
+            if fp.endswith('.py')
+        ],
         job_name='test myscript',
         max_age='10m',
     )
