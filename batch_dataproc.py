@@ -12,11 +12,12 @@ export HAIL_BUCKET=cpg-fewgenomes-test-tmp/hail
 export HAIL_BILLING_PROJECT=$DATASET
 
 And activate the service account:
-gcloud auth activate-service-account fewgenomes-test-126@hail-295901.iam.gserviceaccount.com --key-file ~/gcloud-keys/fewgenomes-test-126-hail.json
+gcloud auth activate-service-account \
+    fewgenomes-test-126@hail-295901.iam.gserviceaccount.com \
+    --key-file ~/gcloud-keys/fewgenomes-test-126-hail.json
 """
 
 import os
-from os.path import join, abspath, dirname
 import hailtop.batch as hb
 from analysis_runner import dataproc
 from package import utils
@@ -38,13 +39,13 @@ def main():  # pylint: disable=missing-function-docstring
     utils.say_hello('batch dataproc.py')
 
     # Scripts path to pass to dataproc when submitting scripts
-    scripts_dir = abspath(join(dirname(__file__), 'scripts'))
-    package_dir = abspath(join(dirname(__file__), 'package'))
+    scripts_dir = 'scripts'
+    package_dir = 'package'
 
     dataproc.hail_dataproc_job(
         b,
         f'{scripts_dir}/myscript.py',
-        # pyfiles=[f'{package_dir}/{fp}' for fp in os.listdir(package_dir)],
+        pyfiles=[f'{package_dir}/{fp}' for fp in os.listdir(package_dir)],
         job_name='test myscript',
         max_age='10m',
     )
